@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+
+  nllb:
+    container_name: ctranslate-nllb
+    stdin_open: true
+    tty: true
+    image: dleongsh/ctranslate-nllb:0.0.1
+    env_file:
+      - .env
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - $PWD/pretrained_models:/pretrained_models
+      - $PWD/src:/src
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 16gb  
+    working_dir: /src
